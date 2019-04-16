@@ -14,3 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/greeting', function () {
+    return "<h1>Hello world</h1>";
+});
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/users/{id}/{name}', function ($id, $name) {
+    return "Hello " . $name . " Your ID is " . $id;
+});
