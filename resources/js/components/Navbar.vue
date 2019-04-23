@@ -1,7 +1,7 @@
 <template>
-    <nav class="navbar .navbar-text navbar-expand-sm navbar-dark bg-info mb-2">
-        <div class="container">
-            <a href="#" class="navbar-brand text-nowrap flex-row mx-md-auto order-1 order-md-2">خدمات دائرة ضريبة الدخل والمبيعات</a>
+    <nav class="flex">
+        <div class="w-full bg-blue-dark text-center text-grey-lighter font-sans-serif font-medium content-center p-4  text-xl h-12">
+            <p>خدمات دائرة ضريبة الدخل والمبيعات</p>
         </div>
     </nav>
 </template>
