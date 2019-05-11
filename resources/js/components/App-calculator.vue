@@ -1,7 +1,7 @@
 <template>
     <div>
         <navbar></navbar>
-        <calculator></calculator>
+        <cal2></cal2>
         <test-tw></test-tw>
     </div>
 </template>

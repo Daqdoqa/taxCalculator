@@ -14,7 +14,6 @@
                   class="border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-l"
                 >
                   <input
-                    v-on:change="submit"
                     class="appearance-none"
                     type="radio"
                     name="resident"
@@ -186,14 +185,11 @@
           </div>
         </template>
       </div>
+
       <div class="mt-20">
         <button
-          v-on:click="submit"
           class="w-full bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-        >
-          احسب الضريبة
-          <input id="submitting" type="checkbox" v-model="userData.submited">
-        </button>
+        >احسب الضريبة</button>
       </div>
     </form>
   </div>
@@ -204,8 +200,14 @@ module.exports = {
   data: function() {
     return {
       year: new Date().getFullYear(),
-      formValidationErrors: {},
       userData: {
+        resident: null,
+        married: null,
+        income: null,
+        spouse_resident: null,
+        spouse_income: null
+      },
+      formValidationErrors: {
         resident: null,
         married: null,
         income: null,
@@ -225,12 +227,12 @@ module.exports = {
         : clickedBtn.previousElementSibling;
       const radioButton = clickedBtn.children[0];
 
-      radioButton.checked = true;
-      // radioButton.setAttribute('checked', true);
-      this.checkRadioBtn(radioButton.name, radioButton.value);
+      this.checkRadioBtn(radioButton);
       this.toggleButtonTheme(clickedBtn, siblingBtn);
 
       this.toggleSpouseInfo();
+
+      this.checkInput({ target: radioButton });
     },
 
     toggleButtonTheme: function(clickedBtn, siblingBtn) {
@@ -243,8 +245,9 @@ module.exports = {
       siblingBtn.classList.add(...notSelectedButtonTheme);
     },
 
-    checkRadioBtn: function(key, value) {
-      this.userData[key] = value;
+    checkRadioBtn: function(radioButton) {
+      radioButton.setAttribute("checked", true);
+      this.userData[radioButton.name] = radioButton.value;
     },
 
     toggleSpouseInfo: function() {
@@ -266,42 +269,52 @@ module.exports = {
 
     checkForm: function(e) {
       if (e) e.preventDefault();
-      console.log("TEST   checking form ...");
 
       for (const key in this.userData) {
         if (this.userData.hasOwnProperty(key)) {
           this.checkError(key, this.userData[key]);
         }
       }
+
+      // TODO: send the userData Object to the API if the form is valid
+      if (this.isValid()) {
+        console.log("Send the object userData to the API: valid");
+        console.log(this.userData);
+      } else {
+        console.log("Send the object userData to the API: NOT valid");
+      }
     },
 
     checkError: function(key, value) {
       const isNumber = /^\d*\.?\d+$/.test(value);
+      const isNotMarried =
+        this.userData.married == null || this.userData.married == "no";
 
-      if (key && !value) this.formValidationErrors[key] = "هذا الحقل مطلوب";
-      else if (key.indexOf("income") != -1 && !isNumber)
+      if (!value) {
+        this.formValidationErrors[key] = "هذا الحقل مطلوب";
+      } else if (key.indexOf("income") != -1 && !isNumber) {
         this.formValidationErrors[key] = "ادخل ارقام فقط";
-      else this.formValidationErrors[key] = null;
+      } else this.formValidationErrors[key] = null;
 
-      console.log(`TEST  key: ${key} value: ${value}`);
-      console.log(`typeof(${key}) `, isNumber);
+      if (isNotMarried) {
+        this.formValidationErrors.spouse_resident = null;
+        this.formValidationErrors.spouse_income = null;
+      }
     },
 
     checkInput: function(e) {
-      console.log('CheckInput' + e.target);
       const element = e.target;
-
       this.checkError(element.name, element.value);
     },
 
-    submit: function(event) {
-      const submitting = document.getElementById('submitting');
+    isValid: function() {
+      const errors = Object.values(this.formValidationErrors);
 
-      submitting.setAttribute('checked', true);
-      console.log('submitting.setAttribute(\'checked\', true) ', submitting.getAttribute('checked'));
+      for (let i = 0; i < errors.length; i++) {
+        if (errors[i]) return false;
+      }
 
-      submitting.setAttribute('checked', false);
-      console.log('submitting.getAttribute(\'checked\') ', submitting.getAttribute('checked'));
+      return true;
     }
   }
 };

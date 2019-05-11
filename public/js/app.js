@@ -202,19 +202,109 @@
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 module.exports = {
   data: function data() {
     return {
       year: new Date().getFullYear(),
-      isMarried: true,
-      kilo: '',
-      dataUser: {
-        checked: false,
-        married: '',
-        income: '',
-        spouse_income: '',
-        spouse_residen: '',
-        resident: ''
+      formValidationErrors: {},
+      userData: {
+        resident: null,
+        married: null,
+        income: null,
+        spouse_resident: null,
+        spouse_income: null
       }
     };
   },
@@ -224,9 +314,11 @@ module.exports = {
       var clickedBtn = event.target;
       var siblingBtn = clickedBtn.nextElementSibling ? clickedBtn.nextElementSibling : clickedBtn.previousElementSibling;
       var radioButton = clickedBtn.children[0];
-      radioButton.checked = true;
+      radioButton.checked = true; // radioButton.setAttribute('checked', true);
+
+      this.checkRadioBtn(radioButton.name, radioButton.value);
       this.toggleButtonTheme(clickedBtn, siblingBtn);
-      console.table("TEST married: ", this.dataUser);
+      this.toggleSpouseInfo();
     },
     toggleButtonTheme: function toggleButtonTheme(clickedBtn, siblingBtn) {
       var _clickedBtn$classList, _clickedBtn$classList2, _siblingBtn$classList, _siblingBtn$classList2;
@@ -242,17 +334,52 @@ module.exports = {
 
       (_siblingBtn$classList2 = siblingBtn.classList).add.apply(_siblingBtn$classList2, notSelectedButtonTheme);
     },
-    toggleMarried: function toggleMarried(event) {
-      if (event) event.preventDefault();
-      console.log("toggleMarried worked");
-      this.isMarried = !this.isMarried;
-    }
-  },
-  watch: {
-    kilo: function kilo(val) {
-      this.kilo = val;
-      console.log('kilo', this.kilo);
-      console.log('val', val);
+    checkRadioBtn: function checkRadioBtn(key, value) {
+      this.userData[key] = value;
+    },
+    toggleSpouseInfo: function toggleSpouseInfo() {
+      var spouseInfo = document.getElementsByClassName("spouse-info");
+      var isMarried = this.userData.married == "yes" ? true : false;
+
+      if (isMarried) {
+        spouseInfo[0].classList.add("visible");
+        spouseInfo[1].classList.add("visible");
+        spouseInfo[0].classList.remove("invisible");
+        spouseInfo[1].classList.remove("invisible");
+      } else {
+        spouseInfo[0].classList.add("invisible");
+        spouseInfo[1].classList.add("invisible");
+        spouseInfo[0].classList.remove("visible");
+        spouseInfo[1].classList.remove("visible");
+      }
+    },
+    checkForm: function checkForm(e) {
+      if (e) e.preventDefault();
+      console.log("TEST   checking form ...");
+
+      for (var key in this.userData) {
+        if (this.userData.hasOwnProperty(key)) {
+          this.checkError(key, this.userData[key]);
+        }
+      }
+    },
+    checkError: function checkError(key, value) {
+      var isNumber = /^\d*\.?\d+$/.test(value);
+      if (key && !value) this.formValidationErrors[key] = "هذا الحقل مطلوب";else if (key.indexOf("income") != -1 && !isNumber) this.formValidationErrors[key] = "ادخل ارقام فقط";else this.formValidationErrors[key] = null;
+      console.log("TEST  key: ".concat(key, " value: ").concat(value));
+      console.log("typeof(".concat(key, ") "), isNumber);
+    },
+    checkInput: function checkInput(e) {
+      console.log('CheckInput' + e.target);
+      var element = e.target;
+      this.checkError(element.name, element.value);
+    },
+    submit: function submit(event) {
+      var submitting = document.getElementById('submitting');
+      submitting.setAttribute('checked', true);
+      console.log('submitting.setAttribute(\'checked\', true) ', submitting.getAttribute('checked'));
+      submitting.setAttribute('checked', false);
+      console.log('submitting.getAttribute(\'checked\') ', submitting.getAttribute('checked'));
     }
   }
 };
@@ -289,6 +416,327 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounted.');
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/cal2.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/cal2.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+module.exports = {
+  data: function data() {
+    return {
+      year: new Date().getFullYear(),
+      userData: {
+        resident: null,
+        married: null,
+        income: null,
+        spouse_resident: null,
+        spouse_income: null
+      },
+      formValidationErrors: {
+        resident: null,
+        married: null,
+        income: null,
+        spouse_resident: null,
+        spouse_income: null
+      }
+    };
+  },
+  methods: {
+    select: function select(event) {
+      if (event) event.preventDefault();
+      var clickedBtn = event.target;
+      var siblingBtn = clickedBtn.nextElementSibling ? clickedBtn.nextElementSibling : clickedBtn.previousElementSibling;
+      var radioButton = clickedBtn.children[0];
+      this.checkRadioBtn(radioButton);
+      this.toggleButtonTheme(clickedBtn, siblingBtn);
+      this.toggleSpouseInfo();
+      this.checkInput({
+        target: radioButton
+      });
+    },
+    toggleButtonTheme: function toggleButtonTheme(clickedBtn, siblingBtn) {
+      var _clickedBtn$classList, _clickedBtn$classList2, _siblingBtn$classList, _siblingBtn$classList2;
+
+      var selectedButtonTheme = ["bg-blue", "text-white"];
+      var notSelectedButtonTheme = ["bg-white", "text-blue"];
+
+      (_clickedBtn$classList = clickedBtn.classList).add.apply(_clickedBtn$classList, selectedButtonTheme);
+
+      (_clickedBtn$classList2 = clickedBtn.classList).remove.apply(_clickedBtn$classList2, notSelectedButtonTheme);
+
+      (_siblingBtn$classList = siblingBtn.classList).remove.apply(_siblingBtn$classList, selectedButtonTheme);
+
+      (_siblingBtn$classList2 = siblingBtn.classList).add.apply(_siblingBtn$classList2, notSelectedButtonTheme);
+    },
+    checkRadioBtn: function checkRadioBtn(radioButton) {
+      radioButton.setAttribute("checked", true);
+      this.userData[radioButton.name] = radioButton.value;
+    },
+    toggleSpouseInfo: function toggleSpouseInfo() {
+      var spouseInfo = document.getElementsByClassName("spouse-info");
+      var isMarried = this.userData.married == "yes" ? true : false;
+
+      if (isMarried) {
+        spouseInfo[0].classList.add("visible");
+        spouseInfo[1].classList.add("visible");
+        spouseInfo[0].classList.remove("invisible");
+        spouseInfo[1].classList.remove("invisible");
+      } else {
+        spouseInfo[0].classList.add("invisible");
+        spouseInfo[1].classList.add("invisible");
+        spouseInfo[0].classList.remove("visible");
+        spouseInfo[1].classList.remove("visible");
+      }
+    },
+    checkForm: function checkForm(e) {
+      if (e) e.preventDefault();
+
+      for (var key in this.userData) {
+        if (this.userData.hasOwnProperty(key)) {
+          this.checkError(key, this.userData[key]);
+        }
+      } // TODO: send the userData Object to the API if the form is valid
+
+
+      if (this.isValid()) {
+        console.log("Send the object userData to the API: valid");
+        console.log(this.userData);
+      } else {
+        console.log("Send the object userData to the API: NOT valid");
+      }
+    },
+    checkError: function checkError(key, value) {
+      var isNumber = /^\d*\.?\d+$/.test(value);
+      var isNotMarried = this.userData.married == null || this.userData.married == "no";
+
+      if (!value) {
+        this.formValidationErrors[key] = "هذا الحقل مطلوب";
+      } else if (key.indexOf("income") != -1 && !isNumber) {
+        this.formValidationErrors[key] = "ادخل ارقام فقط";
+      } else this.formValidationErrors[key] = null;
+
+      if (isNotMarried) {
+        this.formValidationErrors.spouse_resident = null;
+        this.formValidationErrors.spouse_income = null;
+      }
+    },
+    checkInput: function checkInput(e) {
+      var element = e.target;
+      this.checkError(element.name, element.value);
+    },
+    isValid: function isValid() {
+      var errors = Object.values(this.formValidationErrors);
+
+      for (var i = 0; i < errors.length; i++) {
+        if (errors[i]) return false;
+      }
+
+      return true;
+    }
+  }
+};
 
 /***/ }),
 
@@ -777,7 +1225,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    [_c("navbar"), _vm._v(" "), _c("calculator"), _vm._v(" "), _c("test-tw")],
+    [_c("navbar"), _vm._v(" "), _c("cal2"), _vm._v(" "), _c("test-tw")],
     1
   )
 }
@@ -808,449 +1256,572 @@ var render = function() {
       _vm._v("الحاسبة الالكترونية لضريبة الدخل لسنة " + _vm._s(_vm.year))
     ]),
     _vm._v(" "),
-    _c("form", { staticClass: "pb-10 px-10", attrs: { method: "get" } }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "flex flex-row-reverse content-around flex-wrap bg-white h-64"
-        },
-        [
-          _c("div", { staticClass: "w-1/2 p-2" }, [
-            _c(
-              "div",
-              { staticClass: "text-blue text-center font-semibold p-2" },
-              [
-                _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
-                  _vm._v("الاقامة في الاردن")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
+    _c(
+      "form",
+      {
+        staticClass: "pb-10 p-20",
+        attrs: { method: "get" },
+        on: { submit: _vm.checkForm }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "flex flex-row-reverse content-around flex-wrap bg-white h-64"
+          },
+          [
+            _c("div", { staticClass: "w-1/2 p-2" }, [
+              _c(
+                "div",
+                { staticClass: "text-blue text-center font-semibold p-2" },
+                [
+                  _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _vm._v("الاقامة في الاردن")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _c(
+                      "div",
+                      { staticClass: "inline-flex flex-row-reverse w-full" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-l",
+                            on: { click: _vm.select }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userData.resident,
+                                  expression: "userData.resident"
+                                }
+                              ],
+                              staticClass: "appearance-none",
+                              attrs: {
+                                type: "radio",
+                                name: "resident",
+                                value: "yes"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.userData.resident, "yes")
+                              },
+                              on: {
+                                change: [
+                                  function($event) {
+                                    return _vm.$set(
+                                      _vm.userData,
+                                      "resident",
+                                      "yes"
+                                    )
+                                  },
+                                  _vm.submit
+                                ]
+                              }
+                            }),
+                            _vm._v("\n                مقيم\n              ")
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-r",
+                            on: { click: _vm.select }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userData.resident,
+                                  expression: "userData.resident"
+                                }
+                              ],
+                              staticClass: "appearance-none",
+                              attrs: {
+                                type: "radio",
+                                name: "resident",
+                                value: "no"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.userData.resident, "no")
+                              },
+                              on: {
+                                change: function($event) {
+                                  return _vm.$set(
+                                    _vm.userData,
+                                    "resident",
+                                    "no"
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v("\n                غير مقيم\n              ")
+                          ]
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "inline-flex flex-row-reverse w-full" },
+                    {
+                      staticClass:
+                        "bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative",
+                      class: { invisible: !_vm.formValidationErrors.resident },
+                      attrs: { role: "alert" }
+                    },
                     [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-l",
-                          on: { click: _vm.select }
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.dataUser.resident,
-                                expression: "dataUser.resident"
-                              }
-                            ],
-                            staticClass: "appearance-none",
-                            attrs: {
-                              type: "radio",
-                              name: "resident",
-                              value: "yes"
-                            },
-                            domProps: {
-                              checked: _vm._q(_vm.dataUser.resident, "yes")
-                            },
-                            on: {
-                              change: function($event) {
-                                return _vm.$set(_vm.dataUser, "resident", "yes")
-                              }
-                            }
-                          }),
-                          _vm._v("\n                  مقيم\n                ")
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-r",
-                          on: { click: _vm.select }
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.dataUser.resident,
-                                expression: "dataUser.resident"
-                              }
-                            ],
-                            staticClass: "appearance-none",
-                            attrs: {
-                              type: "radio",
-                              name: "resident",
-                              value: "no"
-                            },
-                            domProps: {
-                              checked: _vm._q(_vm.dataUser.resident, "no")
-                            },
-                            on: {
-                              change: function($event) {
-                                return _vm.$set(_vm.dataUser, "resident", "no")
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            "\n                  غير مقيم\n                "
-                          )
-                        ]
-                      )
+                      _c("span", { staticClass: "block sm:inline" }, [
+                        _vm._v(_vm._s(_vm.formValidationErrors.resident))
+                      ])
                     ]
                   )
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "w-1/2 p-2" }, [
-            _c(
-              "div",
-              { staticClass: "text-blue text-center font-semibold p-2" },
-              [
-                _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
-                  _vm._v("الحالة الاجتماعية")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/2 p-2" }, [
+              _c(
+                "div",
+                { staticClass: "text-blue text-center font-semibold p-2" },
+                [
+                  _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _vm._v("الحالة الاجتماعية")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _c(
+                      "div",
+                      { staticClass: "inline-flex flex-row-reverse w-full" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-l",
+                            on: { click: _vm.select }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userData.married,
+                                  expression: "userData.married"
+                                }
+                              ],
+                              staticClass: "appearance-none",
+                              attrs: {
+                                type: "radio",
+                                name: "married",
+                                value: "yes"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.userData.married, "yes")
+                              },
+                              on: {
+                                change: function($event) {
+                                  return _vm.$set(
+                                    _vm.userData,
+                                    "married",
+                                    "yes"
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v("\n                متزوج\n              ")
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-r",
+                            on: { click: _vm.select }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userData.married,
+                                  expression: "userData.married"
+                                }
+                              ],
+                              staticClass: "appearance-none",
+                              attrs: {
+                                type: "radio",
+                                name: "married",
+                                value: "no"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.userData.married, "no")
+                              },
+                              on: {
+                                change: function($event) {
+                                  return _vm.$set(_vm.userData, "married", "no")
+                                }
+                              }
+                            }),
+                            _vm._v(
+                              "\n                غير متزوج\n              "
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "inline-flex flex-row-reverse w-full" },
+                    {
+                      staticClass:
+                        "bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative",
+                      class: { invisible: !_vm.formValidationErrors.married },
+                      attrs: { role: "alert" }
+                    },
                     [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-l",
-                          on: { click: _vm.select }
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.kilo,
-                                expression: "kilo"
-                              }
-                            ],
-                            staticClass: "appearance-none",
-                            attrs: { type: "radio", value: "married" },
-                            domProps: { checked: _vm._q(_vm.kilo, "married") },
-                            on: {
-                              change: function($event) {
-                                _vm.kilo = "married"
-                              }
-                            }
-                          }),
-                          _vm._v("\n                  متزوج\n                ")
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-r",
-                          on: { click: _vm.select }
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.isMarried,
-                                expression: "isMarried"
-                              }
-                            ],
-                            staticClass: "appearance-none",
-                            attrs: { type: "radio", value: "notMarried" },
-                            domProps: {
-                              checked: _vm._q(_vm.isMarried, "notMarried")
-                            },
-                            on: {
-                              change: function($event) {
-                                _vm.isMarried = "notMarried"
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            "\n                  غير متزوج\n                "
-                          )
-                        ]
-                      )
+                      _c("span", { staticClass: "block sm:inline" }, [
+                        _vm._v(_vm._s(_vm.formValidationErrors.married))
+                      ])
                     ]
                   )
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _vm.isMarried
-            ? [
-                _c("div", { staticClass: "w-1/2 p-2" }, [
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/2 p-2" }, [
+              _c(
+                "div",
+                { staticClass: "text-blue text-center font-semibold p-2" },
+                [
+                  _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _vm._v("مجموع الدخل السنوي للزوج")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.userData.income,
+                          expression: "userData.income"
+                        }
+                      ],
+                      staticClass: "border w-full h-8 rounded text-right",
+                      class: {
+                        " border-red-light": _vm.formValidationErrors.income
+                      },
+                      attrs: { type: "text", name: "income" },
+                      domProps: { value: _vm.userData.income },
+                      on: {
+                        input: [
+                          function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.userData,
+                              "income",
+                              $event.target.value
+                            )
+                          },
+                          _vm.checkInput
+                        ],
+                        focusout: _vm.checkInput
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "text-blue text-center font-semibold p-2" },
+                    {
+                      staticClass:
+                        "bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative",
+                      class: { invisible: !_vm.formValidationErrors.income },
+                      attrs: { role: "alert" }
+                    },
                     [
+                      _c("span", { staticClass: "block sm:inline" }, [
+                        _vm._v(_vm._s(_vm.formValidationErrors.income))
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            [
+              _c("div", { staticClass: "spouse-info invisible w-1/2 p-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "text-blue text-center font-semibold p-2" },
+                  [
+                    _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
+                      _vm._v("هل الزوجة مقيمة؟")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
                       _c(
-                        "label",
-                        { staticClass: "flex flex-row-reverse p-1" },
-                        [_vm._v("مجموع الدخل السنوي للزوجة")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
-                        _c("input", {
-                          directives: [
+                        "div",
+                        {
+                          staticClass:
+                            "inline-flex flex-row-reverse shadow w-full"
+                        },
+                        [
+                          _c(
+                            "button",
                             {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.dataUser.spouse_income,
-                              expression: "dataUser.spouse_income"
-                            }
-                          ],
-                          staticClass: "border w-full h-8 rounded",
-                          attrs: { type: "text", name: "income" },
-                          domProps: { value: _vm.dataUser.spouse_income },
-                          on: {
-                            input: function($event) {
+                              staticClass:
+                                "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-l",
+                              on: { click: _vm.select }
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.userData.spouse_resident,
+                                    expression: "userData.spouse_resident"
+                                  }
+                                ],
+                                staticClass: "appearance-none",
+                                attrs: {
+                                  type: "radio",
+                                  name: "spouse_resident",
+                                  value: "yes"
+                                },
+                                domProps: {
+                                  checked: _vm._q(
+                                    _vm.userData.spouse_resident,
+                                    "yes"
+                                  )
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.$set(
+                                      _vm.userData,
+                                      "spouse_resident",
+                                      "yes"
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(
+                                "\n                  نعم\n                "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-r",
+                              on: { click: _vm.select }
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.userData.spouse_resident,
+                                    expression: "userData.spouse_resident"
+                                  }
+                                ],
+                                staticClass: "appearance-none",
+                                attrs: {
+                                  type: "radio",
+                                  name: "spouse_resident",
+                                  value: "no"
+                                },
+                                domProps: {
+                                  checked: _vm._q(
+                                    _vm.userData.spouse_resident,
+                                    "no"
+                                  )
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.$set(
+                                      _vm.userData,
+                                      "spouse_resident",
+                                      "no"
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v("\n                  لا\n                ")
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative",
+                        class: {
+                          invisible: !_vm.formValidationErrors.spouse_resident
+                        },
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _c("span", { staticClass: "block sm:inline" }, [
+                          _vm._v(
+                            _vm._s(_vm.formValidationErrors.spouse_resident)
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "spouse-info invisible w-1/2 p-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "text-blue text-center font-semibold p-2" },
+                  [
+                    _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
+                      _vm._v("مجموع الدخل السنوي للزوجة")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.userData.spouse_income,
+                            expression: "userData.spouse_income"
+                          }
+                        ],
+                        staticClass: "border w-full h-8 rounded text-right",
+                        class: {
+                          " border-red-light":
+                            _vm.formValidationErrors.spouse_income
+                        },
+                        attrs: { type: "text", name: "spouse_income" },
+                        domProps: { value: _vm.userData.spouse_income },
+                        on: {
+                          input: [
+                            function($event) {
                               if ($event.target.composing) {
                                 return
                               }
                               _vm.$set(
-                                _vm.dataUser,
+                                _vm.userData,
                                 "spouse_income",
                                 $event.target.value
                               )
-                            }
-                          }
-                        })
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "w-1/2 p-2" }, [
-                  _c(
-                    "div",
-                    { staticClass: "text-blue text-center font-semibold p-2" },
-                    [
-                      _c(
-                        "label",
-                        { staticClass: "flex flex-row-reverse p-1" },
-                        [_vm._v("هل الزوجة مقيمة؟")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "inline-flex flex-row-reverse shadow w-full"
-                          },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-l",
-                                on: { click: _vm.select }
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.dataUser.spouse_resident,
-                                      expression: "dataUser.spouse_resident"
-                                    }
-                                  ],
-                                  staticClass: "appearance-none",
-                                  attrs: {
-                                    type: "radio",
-                                    name: "spouse_resident",
-                                    value: "yes"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(
-                                      _vm.dataUser.spouse_resident,
-                                      "yes"
-                                    )
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      return _vm.$set(
-                                        _vm.dataUser,
-                                        "spouse_resident",
-                                        "yes"
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(
-                                  "\n                    نعم\n                  "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-r",
-                                on: { click: _vm.select }
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.dataUser.spouse_resident,
-                                      expression: "dataUser.spouse_resident"
-                                    }
-                                  ],
-                                  staticClass: "appearance-none",
-                                  attrs: {
-                                    type: "radio",
-                                    name: "spouse_resident",
-                                    value: "no"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(
-                                      _vm.dataUser.spouse_resident,
-                                      "no"
-                                    )
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      return _vm.$set(
-                                        _vm.dataUser,
-                                        "spouse_resident",
-                                        "no"
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(
-                                  "\n                    لا\n                  "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ]
-                  )
-                ])
-              ]
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.dataUser.spouse_resident,
-                expression: "dataUser.spouse_resident"
-              }
-            ],
-            attrs: { type: "radio", name: "spouse_resident", value: "yes" },
-            domProps: { checked: _vm._q(_vm.dataUser.spouse_resident, "yes") },
-            on: {
-              change: function($event) {
-                return _vm.$set(_vm.dataUser, "spouse_resident", "yes")
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.dataUser.spouse_resident,
-                expression: "dataUser.spouse_resident"
-              }
-            ],
-            attrs: { type: "radio", name: "spouse_resident", value: "no" },
-            domProps: { checked: _vm._q(_vm.dataUser.spouse_resident, "no") },
-            on: {
-              change: function($event) {
-                return _vm.$set(_vm.dataUser, "spouse_resident", "no")
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "w-1/2 p-2" }, [
-            _c(
-              "div",
-              { staticClass: "text-blue text-center font-semibold p-2" },
-              [
-                _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
-                  _vm._v("مجموع الدخل السنوي للزوج")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.dataUser.income,
-                        expression: "dataUser.income"
-                      }
-                    ],
-                    staticClass: "border w-full h-8 rounded",
-                    attrs: { type: "text", name: "income" },
-                    domProps: { value: _vm.dataUser.income },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                            },
+                            _vm.checkInput
+                          ],
+                          focusout: _vm.checkInput
                         }
-                        _vm.$set(_vm.dataUser, "income", $event.target.value)
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative",
+                        class: {
+                          invisible: !_vm.formValidationErrors.spouse_income
+                        },
+                        attrs: { id: "spouse_income", role: "alert" }
+                      },
+                      [
+                        _c("span", { staticClass: "block sm:inline" }, [
+                          _vm._v(_vm._s(_vm.formValidationErrors.spouse_income))
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ]
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-20" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "w-full bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded",
+              on: { click: _vm.submit }
+            },
+            [
+              _vm._v("\n        احسب الضريبة\n        "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.userData.submited,
+                    expression: "userData.submited"
+                  }
+                ],
+                attrs: { id: "submitting", type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.userData.submited)
+                    ? _vm._i(_vm.userData.submited, null) > -1
+                    : _vm.userData.submited
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.userData.submited,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.userData, "submited", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.userData,
+                            "submited",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
                       }
+                    } else {
+                      _vm.$set(_vm.userData, "submited", $$c)
                     }
-                  })
-                ])
-              ]
-            )
-          ])
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _vm._m(0)
-    ])
+                  }
+                }
+              })
+            ]
+          )
+        ])
+      ]
+    )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-12" }, [
-      _c(
-        "button",
-        {
-          staticClass:
-            "w-full bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-        },
-        [_vm._v("احسب الضريبة")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -1423,6 +1994,559 @@ var staticRenderFns = [
             )
           ])
         ]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/cal2.vue?vue&type=template&id=db6c4a22&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/cal2.vue?vue&type=template&id=db6c4a22&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container w-3/5 mx-auto bg-white" }, [
+    _c("h2", { staticClass: "text-center text-blue py-10" }, [
+      _vm._v("الحاسبة الالكترونية لضريبة الدخل لسنة " + _vm._s(_vm.year))
+    ]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "pb-10 p-20",
+        attrs: { method: "get" },
+        on: { submit: _vm.checkForm }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "flex flex-row-reverse content-around flex-wrap bg-white h-64"
+          },
+          [
+            _c("div", { staticClass: "w-1/2 p-2" }, [
+              _c(
+                "div",
+                { staticClass: "text-blue text-center font-semibold p-2" },
+                [
+                  _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _vm._v("الاقامة في الاردن")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _c(
+                      "div",
+                      { staticClass: "inline-flex flex-row-reverse w-full" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-l",
+                            on: { click: _vm.select }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userData.resident,
+                                  expression: "userData.resident"
+                                }
+                              ],
+                              staticClass: "appearance-none",
+                              attrs: {
+                                type: "radio",
+                                name: "resident",
+                                value: "yes"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.userData.resident, "yes")
+                              },
+                              on: {
+                                change: function($event) {
+                                  return _vm.$set(
+                                    _vm.userData,
+                                    "resident",
+                                    "yes"
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v("\n                مقيم\n              ")
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-r",
+                            on: { click: _vm.select }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userData.resident,
+                                  expression: "userData.resident"
+                                }
+                              ],
+                              staticClass: "appearance-none",
+                              attrs: {
+                                type: "radio",
+                                name: "resident",
+                                value: "no"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.userData.resident, "no")
+                              },
+                              on: {
+                                change: function($event) {
+                                  return _vm.$set(
+                                    _vm.userData,
+                                    "resident",
+                                    "no"
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v("\n                غير مقيم\n              ")
+                          ]
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative",
+                      class: { invisible: !_vm.formValidationErrors.resident },
+                      attrs: { role: "alert" }
+                    },
+                    [
+                      _c("span", { staticClass: "block sm:inline" }, [
+                        _vm._v(_vm._s(_vm.formValidationErrors.resident))
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/2 p-2" }, [
+              _c(
+                "div",
+                { staticClass: "text-blue text-center font-semibold p-2" },
+                [
+                  _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _vm._v("الحالة الاجتماعية")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _c(
+                      "div",
+                      { staticClass: "inline-flex flex-row-reverse w-full" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-l",
+                            on: { click: _vm.select }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userData.married,
+                                  expression: "userData.married"
+                                }
+                              ],
+                              staticClass: "appearance-none",
+                              attrs: {
+                                type: "radio",
+                                name: "married",
+                                value: "yes"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.userData.married, "yes")
+                              },
+                              on: {
+                                change: function($event) {
+                                  return _vm.$set(
+                                    _vm.userData,
+                                    "married",
+                                    "yes"
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v("\n                متزوج\n              ")
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-r",
+                            on: { click: _vm.select }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userData.married,
+                                  expression: "userData.married"
+                                }
+                              ],
+                              staticClass: "appearance-none",
+                              attrs: {
+                                type: "radio",
+                                name: "married",
+                                value: "no"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.userData.married, "no")
+                              },
+                              on: {
+                                change: function($event) {
+                                  return _vm.$set(_vm.userData, "married", "no")
+                                }
+                              }
+                            }),
+                            _vm._v(
+                              "\n                غير متزوج\n              "
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative",
+                      class: { invisible: !_vm.formValidationErrors.married },
+                      attrs: { role: "alert" }
+                    },
+                    [
+                      _c("span", { staticClass: "block sm:inline" }, [
+                        _vm._v(_vm._s(_vm.formValidationErrors.married))
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/2 p-2" }, [
+              _c(
+                "div",
+                { staticClass: "text-blue text-center font-semibold p-2" },
+                [
+                  _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _vm._v("مجموع الدخل السنوي للزوج")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.userData.income,
+                          expression: "userData.income"
+                        }
+                      ],
+                      staticClass: "border w-full h-8 rounded text-right",
+                      class: {
+                        " border-red-light": _vm.formValidationErrors.income
+                      },
+                      attrs: { type: "text", name: "income" },
+                      domProps: { value: _vm.userData.income },
+                      on: {
+                        input: [
+                          function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.userData,
+                              "income",
+                              $event.target.value
+                            )
+                          },
+                          _vm.checkInput
+                        ],
+                        focusout: _vm.checkInput
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative",
+                      class: { invisible: !_vm.formValidationErrors.income },
+                      attrs: { role: "alert" }
+                    },
+                    [
+                      _c("span", { staticClass: "block sm:inline" }, [
+                        _vm._v(_vm._s(_vm.formValidationErrors.income))
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            [
+              _c("div", { staticClass: "spouse-info invisible w-1/2 p-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "text-blue text-center font-semibold p-2" },
+                  [
+                    _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
+                      _vm._v("هل الزوجة مقيمة؟")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "inline-flex flex-row-reverse shadow w-full"
+                        },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-l",
+                              on: { click: _vm.select }
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.userData.spouse_resident,
+                                    expression: "userData.spouse_resident"
+                                  }
+                                ],
+                                staticClass: "appearance-none",
+                                attrs: {
+                                  type: "radio",
+                                  name: "spouse_resident",
+                                  value: "yes"
+                                },
+                                domProps: {
+                                  checked: _vm._q(
+                                    _vm.userData.spouse_resident,
+                                    "yes"
+                                  )
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.$set(
+                                      _vm.userData,
+                                      "spouse_resident",
+                                      "yes"
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(
+                                "\n                  نعم\n                "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "border shadow w-full text-blue hover:bg-blue-dark hover:text-white font-bold py-2 px-4 rounded-r",
+                              on: { click: _vm.select }
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.userData.spouse_resident,
+                                    expression: "userData.spouse_resident"
+                                  }
+                                ],
+                                staticClass: "appearance-none",
+                                attrs: {
+                                  type: "radio",
+                                  name: "spouse_resident",
+                                  value: "no"
+                                },
+                                domProps: {
+                                  checked: _vm._q(
+                                    _vm.userData.spouse_resident,
+                                    "no"
+                                  )
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.$set(
+                                      _vm.userData,
+                                      "spouse_resident",
+                                      "no"
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v("\n                  لا\n                ")
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative",
+                        class: {
+                          invisible: !_vm.formValidationErrors.spouse_resident
+                        },
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _c("span", { staticClass: "block sm:inline" }, [
+                          _vm._v(
+                            _vm._s(_vm.formValidationErrors.spouse_resident)
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "spouse-info invisible w-1/2 p-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "text-blue text-center font-semibold p-2" },
+                  [
+                    _c("label", { staticClass: "flex flex-row-reverse p-1" }, [
+                      _vm._v("مجموع الدخل السنوي للزوجة")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "flex flex-row-reverse p-1" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.userData.spouse_income,
+                            expression: "userData.spouse_income"
+                          }
+                        ],
+                        staticClass: "border w-full h-8 rounded text-right",
+                        class: {
+                          " border-red-light":
+                            _vm.formValidationErrors.spouse_income
+                        },
+                        attrs: { type: "text", name: "spouse_income" },
+                        domProps: { value: _vm.userData.spouse_income },
+                        on: {
+                          input: [
+                            function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.userData,
+                                "spouse_income",
+                                $event.target.value
+                              )
+                            },
+                            _vm.checkInput
+                          ],
+                          focusout: _vm.checkInput
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "bg-red-lightest border border-red-light text-red-dark px-4 py-3 rounded relative",
+                        class: {
+                          invisible: !_vm.formValidationErrors.spouse_income
+                        },
+                        attrs: { id: "spouse_income", role: "alert" }
+                      },
+                      [
+                        _c("span", { staticClass: "block sm:inline" }, [
+                          _vm._v(_vm._s(_vm.formValidationErrors.spouse_income))
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ]
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _vm._m(0)
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-20" }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "w-full bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+        },
+        [_vm._v("احسب الضريبة")]
       )
     ])
   }
@@ -13564,6 +14688,7 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 Vue.component('app-calculator', __webpack_require__(/*! ./components/App-calculator.vue */ "./resources/js/components/App-calculator.vue")["default"]);
 Vue.component('navbar', __webpack_require__(/*! ./components/Navbar.vue */ "./resources/js/components/Navbar.vue")["default"]);
 Vue.component('calculator', __webpack_require__(/*! ./components/Calculator.vue */ "./resources/js/components/Calculator.vue")["default"]);
+Vue.component('cal2', __webpack_require__(/*! ./components/cal2.vue */ "./resources/js/components/cal2.vue")["default"]);
 Vue.component('test-tw', __webpack_require__(/*! ./components/TestingTailwind.vue */ "./resources/js/components/TestingTailwind.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -13872,6 +14997,78 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TestingTailwind_vue_vue_type_template_id_2d094aed___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TestingTailwind_vue_vue_type_template_id_2d094aed___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/cal2.vue":
+/*!******************************************!*\
+  !*** ./resources/js/components/cal2.vue ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _cal2_vue_vue_type_template_id_db6c4a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cal2.vue?vue&type=template&id=db6c4a22&scoped=true& */ "./resources/js/components/cal2.vue?vue&type=template&id=db6c4a22&scoped=true&");
+/* harmony import */ var _cal2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cal2.vue?vue&type=script&lang=js& */ "./resources/js/components/cal2.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _cal2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _cal2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _cal2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _cal2_vue_vue_type_template_id_db6c4a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _cal2_vue_vue_type_template_id_db6c4a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "db6c4a22",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/cal2.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/cal2.vue?vue&type=script&lang=js&":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/cal2.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cal2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./cal2.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/cal2.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cal2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cal2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cal2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cal2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_cal2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/cal2.vue?vue&type=template&id=db6c4a22&scoped=true&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/cal2.vue?vue&type=template&id=db6c4a22&scoped=true& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cal2_vue_vue_type_template_id_db6c4a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./cal2.vue?vue&type=template&id=db6c4a22&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/cal2.vue?vue&type=template&id=db6c4a22&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cal2_vue_vue_type_template_id_db6c4a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_cal2_vue_vue_type_template_id_db6c4a22_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

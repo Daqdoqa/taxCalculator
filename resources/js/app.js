@@ -24,6 +24,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('app-calculator', require('./components/App-calculator.vue').default);
 Vue.component('navbar', require('./components/Navbar.vue').default);
 Vue.component('calculator', require('./components/Calculator.vue').default);
+Vue.component('cal2', require('./components/cal2.vue').default);
 Vue.component('test-tw', require('./components/TestingTailwind.vue').default);
 
 /**
